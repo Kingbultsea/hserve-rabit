@@ -95,6 +95,7 @@ router.post('/user/nowdata2', (ctx, next) => {
 // 询问当前准备状态
 router.get('/user/nowdata', (ctx, next) => {
   const id = ctx.request.roomId
+  console.log(id)
   let data = anchorCreateData.get(id)
   if (!data) {
     return
