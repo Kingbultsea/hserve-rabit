@@ -81,6 +81,7 @@ router.post('/user/nowdata2', (ctx, next) => {
 
 // 询问当前准备状态
 router.get('/user/nowdata', (ctx, next) => {
+  console.log(ctx.request.headers)
   console.log('?')
   const id = '12345'
   let data = anchorCreateData.get(id)
