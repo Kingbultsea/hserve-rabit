@@ -3,6 +3,7 @@ let Router = require('koa-router')
 let app = new Koa()
 let router = new Router()
 const bodyParser = require('koa-bodyparser')
+const atob = require('atob')
 
 function randomNum (minNum, maxNum) {
   switch (arguments.length) {
