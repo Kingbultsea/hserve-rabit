@@ -32,11 +32,12 @@ app.use(async (ctx, next) => {
   // ctx.set('Content-Type', 'application/json;charset=utf-8')
   ctx.set('Access-Control-Max-Age', 300)
 
-  console.log(ctx.request.headers)
-  const array = ctx.request.headers.authorization.split('.')
-  const decode = JSON.parse(base64deCode(array[1]))
-  console.log(decode, decode.roomId)
-  ctx.request.roomId = decode.roomId
+  // const array = ctx.request.headers.authorization.split('.')
+  // const decode = JSON.parse(base64deCode(array[1]))
+  // ctx.request.roomId = decode.roomId
+
+  // 测试
+  ctx.request.roomId = '12345'
 
   if (ctx.request.method === 'OPTIONS') {
     ctx.response.status = 204
@@ -95,18 +96,46 @@ router.post('/user/nowdata2', (ctx, next) => {
 
 // 询问当前准备状态
 router.get('/user/nowdata', (ctx, next) => {
-  console.log('?')
   const id = ctx.request.roomId
-  console.log(id)
+  // console.log(id)
   let data = anchorCreateData.get(id)
   if (!data) {
+    ctx.body = { msg: 'err' }
     return
   }
   ctx.body = anchorCreateData.get(id).inviter
 })
 
+// 用户申请玩
+router.post('/user/sendjoin', (ctx, next) => {
+  const id = ctx.request.roomId
+  if (!anchorCreateData.get(id)) {
+    // 没有则返回
+    return
+  }
+  const data = ctx.request.body
+  console.log('用户申请', data.avatar, data.name)
+
+  const userList = anchorCreateData.get(id).userList
+  for (let i of userList) {
+    if (i.name === data.name && i.avatar === data.avatar) {
+      ctx.body = { msg: 'success', hash: '' }
+      return
+    }
+  }
+  console.log('用户申请', data.avatar, data.name)
+  anchorCreateData.get(id).userList.add({
+    name: data.name,
+    avatar: data.avatar
+  })
+  ctx.body = { msg: 'success', hash: '' }
+})
+
 // 用户在线准备状态进入游戏
 router.post('/user/ready', (ctx, next) => {
+  const selfName = ctx.request.body.name
+  const selfAvatar = ctx.request.body.avatar
+
   const id = ctx.request.roomId
   if (!anchorCreateData.get(id)) {
     // 没有则返回
@@ -124,7 +153,12 @@ router.post('/user/ready', (ctx, next) => {
         for (let [index, i] of anchorCreateData.get(id).inviter.entries()) {
           if (data.name === i.name && data.avatar === i.avatar) {
             i.desc = '准备中'
-            i.status = 5
+
+            // 只有自己才可以准备
+            if (selfName === i.name && selfAvatar === i.avatar) {
+              i.status = 5
+            }
+
             i.front = 500
             i.round += 1
 
@@ -154,7 +188,7 @@ router.post('/user/ready', (ctx, next) => {
                   index === 2 ? trueActions = ['left', 'up', 'down'] : ''
                   index === 3 ? trueActions = ['left', 'up', 'right'] : ''
                   i.front = trueActions[randomNum(0, 2)]
-
+                  i.desc = '等待中'
                 }
               }, 25000)
 
@@ -249,7 +283,7 @@ router.post('/anchor/create', async (ctx, next) => {
     inviter.push({
       name: i.userNick,
       avatar: i.userAvatarUrl,
-      status: 5, // 测试 先所有的 都是5 先
+      status: 0, // 测试 先所有的 都是5 先
       score: 0,
       desc: '准备中',
       front: 500,
@@ -257,9 +291,42 @@ router.post('/anchor/create', async (ctx, next) => {
       round: 0
     })
   }
+
+  // 主播10秒后，还有用户未准备的话，将随机抽取一位点击user/nowdata的用户
+  const rad = () => {
+    for (let [index, i] of anchorCreateData.get(id).inviter.entries()) {
+      if (i.status !== 5) {
+        const userList = anchorCreateData.get(id).userList
+        const arr = [...userList]
+        if (arr.length === 0) {
+          setTimeout(rad, 10000)
+          return
+        }
+        const rdN = randomNum(0, arr.length - 1)
+        userList.delete(arr[rdN])
+        anchorCreateData.get(id).inviter[index] = {
+          name: arr[rdN].name,
+          avatar: arr[rdN].avatar,
+          status: 5, // 继续为0 需要玩家再次按下
+          score: 0,
+          desc: '准备中',
+          front: 500,
+          counter: 0,
+          round: 0
+        }
+        if (arr.length <= 1) {
+          setTimeout(rad, 10000)
+          return
+        }
+      }
+    }
+  }
+  setTimeout(rad, 10000)
+
   let controler = {
     inviter,
-    firstGetIn: false // 首次进入
+    firstGetIn: false, // 首次进入
+    userList: new Set() // 用户申请玩
   }
   anchorCreateData.set(id, controler)
 
@@ -286,3 +353,8 @@ app.listen(port)
 // 那么用户首次进入是会执行那个ready的 所以我在哪setTimeout一个就好了
 // 但是问题又来了，那个20000 把握不好，会造成用户首次进入，直接就被判断为随机了
 // 现在缺一个状态，所有用户进入到界面，才能触发那个20000，其实就是所有的type为5才触发那个20000
+
+// 主播如果一直都在等待中
+// 那么直接随机匹配一位点击参与的用户
+
+// 准备问题
