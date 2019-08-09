@@ -15,6 +15,12 @@ function randomNum (minNum, maxNum) {
   }
 }
 
+function base64deCode (str) {
+  return decodeURIComponent(atob(str).split('').map(function (c) {
+    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+  }).join(''))
+}
+
 app.use(bodyParser())
 app.use(async (ctx, next) => {
   ctx.set('Access-Control-Allow-Origin', '*')
@@ -24,6 +30,14 @@ app.use(async (ctx, next) => {
   ctx.set('Access-Control-Allow-Headers', '*')
   // ctx.set('Content-Type', 'application/json;charset=utf-8')
   ctx.set('Access-Control-Max-Age', 300)
+
+  console.log(ctx.request.headers)
+  const array = ctx.request.headers.authorization.split('.')
+  console.log(
+    base64deCode(array[1].roomId)
+  )
+  ctx.request.roomId = base64deCode(array[1].roomId)
+
   if (ctx.request.method === 'OPTIONS') {
     ctx.response.status = 204
   }
@@ -70,7 +84,7 @@ let controler = {
 // 游戏目前交换情况
 router.post('/user/nowdata2', (ctx, next) => {
   const body = ctx.request.body
-  const id = '12345'
+  const id = ctx.request.roomId
   let data = anchorCreateData.get(id)
   if (!data) {
     return
@@ -81,9 +95,7 @@ router.post('/user/nowdata2', (ctx, next) => {
 
 // 询问当前准备状态
 router.get('/user/nowdata', (ctx, next) => {
-  console.log(ctx.request.headers)
-  console.log('?')
-  const id = '12345'
+  const id = ctx.request.roomId
   let data = anchorCreateData.get(id)
   if (!data) {
     return
@@ -93,7 +105,7 @@ router.get('/user/nowdata', (ctx, next) => {
 
 // 用户在线准备状态进入游戏
 router.post('/user/ready', (ctx, next) => {
-  const id = '12345'
+  const id = ctx.request.roomId
   if (!anchorCreateData.get(id)) {
     // 没有则返回
     return
@@ -164,7 +176,7 @@ router.post('/user/ready', (ctx, next) => {
 
 // 用户进入下一个回合
 // router.post('/user/next', (ctx, next) => {
-//   const id = '12345'
+//   const id = ctx.request.roomId
 //   if (!anchorCreateData.get(id)) {
 //     // 没有则返回
 //     return
@@ -184,7 +196,7 @@ router.post('/user/ready', (ctx, next) => {
 // 用户提交键盘事件
 const front = ['up', 'down', 'left', 'right']
 router.post('/user/front', (ctx, next) => {
-  const id = '12345'
+  const id = ctx.request.roomId
   if (!anchorCreateData.get(id)) {
     // 没有则返回
     return
@@ -224,7 +236,7 @@ router.post('/user/front', (ctx, next) => {
 // 主播添加邀请人
 let anchorCreateData = new Map()
 router.post('/anchor/create', async (ctx, next) => {
-  const id = '12345'
+  const id = ctx.request.roomId
   const users = JSON.parse(ctx.request.body.users)
   let inviter = []
   for (let i of users) {
@@ -253,7 +265,7 @@ router.post('/anchor/create', async (ctx, next) => {
 })
 
 router.post('/anchor/unload', async (ctx, next) => {
-  const id = '12345'
+  const id = ctx.request.roomId
   anchorCreateData.delete(id)
 
   ctx.body = { msg: 'success' }
