@@ -34,10 +34,8 @@ app.use(async (ctx, next) => {
 
   console.log(ctx.request.headers)
   const array = ctx.request.headers.authorization.split('.')
-  console.log(
-    base64deCode(array[1].roomId)
-  )
-  ctx.request.roomId = base64deCode(array[1].roomId)
+  const decode = base64deCode(array[1])
+  ctx.request.roomId = decode.roomId
 
   if (ctx.request.method === 'OPTIONS') {
     ctx.response.status = 204
