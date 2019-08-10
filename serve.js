@@ -220,8 +220,8 @@ router.post('/user/ready', (ctx, next) => {
             }
             setTimeout(func, 5000)
 
-            ctx.body = { msg: 'success', hash: '' }
-            return
+            // ctx.body = { msg: 'success', hash: '' }
+            // return
 
         }
 
