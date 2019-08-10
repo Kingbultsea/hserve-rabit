@@ -162,10 +162,10 @@ router.post('/user/ready', (ctx, next) => {
             // 只有自己才可以准备
             if (selfName === i.name && selfAvatar === i.avatar) {
               i.status = 5
+              i.round += 1 // 现在设置只有自己的round才能加
             }
 
             i.front = 500
-            i.round += 1
 
             // 检测当前round 如果过了秒数还是一样相等， 那么自动输入
             const roundSaver = i.round
