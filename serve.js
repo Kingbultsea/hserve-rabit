@@ -166,7 +166,7 @@ router.post('/user/ready', (ctx, next) => {
 
               console.log('avtive gameing')
               i.status = 5
-              i.round += 1 // 现在设置只有自己的round才能加
+              // i.round += 1 // 现在设置只有自己的round才能加
             }
 
             i.front = 500
@@ -202,6 +202,7 @@ router.post('/user/ready', (ctx, next) => {
                   } else {
                     console.log('self not plus')
                     // 自己
+                    i.round += 1
                     // i.round += 1 // 准备下一个回合的 +1
                   }
                   // i.round += 1 // 准备下一个回合的 +1
