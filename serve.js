@@ -165,8 +165,11 @@ router.post('/user/ready', (ctx, next) => {
 
               // 删除上一次的状态检查
               if (i.onlineTimeout) {
+                console.log('delete')
                 clearTimeout(i.onlineTimeout)
               }
+
+              console.log('avtive gameing')
 
               // 30秒后 该用户没有再次激活
               i.onlineTimeout = setTimeout(() => {
@@ -335,7 +338,7 @@ router.post('/anchor/create', async (ctx, next) => {
           desc: '准备中',
           front: 500,
           online: false, // 每一个回合的在线状态
-          onlineTimeout: '', // 记录在线的steTimeout
+          onlineTimeout: null, // 记录在线的steTimeout
           counter: 0,
           round: 0
         }
