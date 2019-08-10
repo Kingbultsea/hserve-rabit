@@ -32,12 +32,12 @@ app.use(async (ctx, next) => {
   // ctx.set('Content-Type', 'application/json;charset=utf-8')
   ctx.set('Access-Control-Max-Age', 300)
 
-  // const array = ctx.request.headers.authorization.split('.')
-  // const decode = JSON.parse(base64deCode(array[1]))
-  // ctx.request.roomId = decode.roomId
+  const array = ctx.request.headers.authorization.split('.')
+  const decode = JSON.parse(base64deCode(array[1]))
+  ctx.request.roomId = decode.roomId
 
   // 测试
-  ctx.request.roomId = '12345'
+  // ctx.request.roomId = '12345'
 
   if (ctx.request.method === 'OPTIONS') {
     ctx.response.status = 204
@@ -275,14 +275,15 @@ router.post('/anchor/create', async (ctx, next) => {
   const id = ctx.request.roomId
   const users = JSON.parse(ctx.request.body.users)
   let inviter = []
-  for (let i of users) {
+  for (let index = 0; index < 4; index++) {
+    const i = users[index]
     if (inviter.length >= 4) {
       break
     }
 
     inviter.push({
-      name: i.userNick,
-      avatar: i.userAvatarUrl,
+      name: users[index] ? i.userNick : randomNum(0, 4000),
+      avatar: users[index] ? i.userAvatarUrl : '23' + randomNum(0, 4000),
       status: 0, // 测试 先所有的 都是5 先
       score: 0,
       desc: '准备中',
