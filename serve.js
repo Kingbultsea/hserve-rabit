@@ -259,6 +259,7 @@ router.post('/user/front', (ctx, next) => {
       if (data.name === i.name && data.avatar === i.avatar) {
         i.front = data.front
         i.desc = '等待中'
+        i.round += 1
         ctx.body = { msg: 'success', hash: '' }
         return
       }
