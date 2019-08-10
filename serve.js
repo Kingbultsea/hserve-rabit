@@ -37,8 +37,8 @@ app.use(async (ctx, next) => {
     const decode = JSON.parse(base64deCode(array[1]))
     ctx.request.roomId = decode.roomId
   } catch (e) {
-    ctx.request.roomId = '12345'
   }
+  ctx.request.roomId = '12345'
 
 
   // 测试
