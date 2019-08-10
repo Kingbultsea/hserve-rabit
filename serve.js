@@ -186,6 +186,7 @@ router.post('/user/ready', (ctx, next) => {
                 }
                 console.log(i.round, roundSaver)
                 if (i.round === roundSaver) {
+                  i.round += 1 // 准备下一个回合的 +1
                   console.log('随机状态触发')
                   let trueActions = []
                   index === 0 ? trueActions = ['left', 'right', 'down'] : ''
