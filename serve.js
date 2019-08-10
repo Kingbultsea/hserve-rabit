@@ -146,17 +146,12 @@ router.post('/user/ready', (ctx, next) => {
     // 没有则返回
     return
   }
-  // 模拟数据 一次触发4个
-  if (true) {
-    for (let moni of anchorCreateData.get(id).inviter) {
-      console.log('触发4次啊')
-      function a () {
-        const data = {
-          name: moni.name,
-          avatar: moni.avatar
-        }// ctx.request.body
+
+
+
+
         for (let [index, i] of anchorCreateData.get(id).inviter.entries()) {
-          if (data.name === i.name && data.avatar === i.avatar) {
+
             i.desc = '准备中'
 
             // 只有自己才可以准备
@@ -216,14 +211,11 @@ router.post('/user/ready', (ctx, next) => {
 
             ctx.body = { msg: 'success', hash: '' }
             return
-          }
+
         }
-      }
 
-      a()
 
-    }
-  }
+
 
 
   ctx.body = { msg: 'success', hash: '' }
