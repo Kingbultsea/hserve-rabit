@@ -192,12 +192,15 @@ router.post('/user/ready', (ctx, next) => {
                 if (i.round === roundSaver) {
                   // 别人如果是在线状态 那么只修改自己的随机状态
                   if (i.online && selfName === i.name && selfAvatar === i.avatar) {
+                    console.log('self return')
                     return
                   }
 
                   if (selfName !== i.name && selfAvatar !== i.avatar) {
+                    console.log('another plus ' + i.name)
                     i.round += 1 // 准备下一个回合的 +1
                   } else {
+                    console.log('self not plus')
                     // 自己
                     // i.round += 1 // 准备下一个回合的 +1
                   }
