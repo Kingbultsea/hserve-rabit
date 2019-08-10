@@ -150,6 +150,28 @@ router.post('/user/ready', (ctx, next) => {
   if (true) {
     for (let moni of anchorCreateData.get(id).inviter) {
       console.log('触发4次啊')
+
+      // 只有自己才可以准备
+      if (selfName === moni.name && selfAvatar === moni.avatar) {
+        moni.online = true
+
+        // 删除上一次的状态检查
+        if (moni.onlineTimeout) {
+          console.log('delete')
+          clearTimeout(moni.onlineTimeout)
+        }
+
+        console.log('avtive gameing')
+
+        // 30秒后 该用户没有再次激活
+        moni.onlineTimeout = setTimeout(() => {
+          moni.online = false
+        }, 20000)
+
+        moni.status = 5
+        moni.round += 1 // 现在设置只有自己的round才能加
+      }
+
       function a () {
         const data = {
           name: moni.name,
@@ -158,28 +180,6 @@ router.post('/user/ready', (ctx, next) => {
         for (let [index, i] of anchorCreateData.get(id).inviter.entries()) {
           if (data.name === i.name && data.avatar === i.avatar) {
             i.desc = '准备中'
-
-            // 只有自己才可以准备
-            if (selfName === i.name && selfAvatar === i.avatar) {
-              i.online = true
-
-              // // 删除上一次的状态检查
-              // if (i.onlineTimeout) {
-              //   console.log('delete')
-              //   clearTimeout(i.onlineTimeout)
-              // }
-//
-              // console.log('avtive gameing')
-//
-              // // 30秒后 该用户没有再次激活
-              // i.onlineTimeout = setTimeout(() => {
-              //   i.online = false
-              // }, 30000)
-
-              i.status = 5
-              i.round += 1 // 现在设置只有自己的round才能加
-            }
-
             i.front = 500
 
             // 检测当前round 如果过了秒数还是一样相等， 那么自动输入
