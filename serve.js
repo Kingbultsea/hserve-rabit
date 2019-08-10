@@ -313,6 +313,8 @@ router.post('/anchor/create', async (ctx, next) => {
       score: 0,
       desc: '准备中',
       front: 500,
+      online: false, // 每一个回合的在线状态
+      onlineTimeout: null, // 记录在线的steTimeout
       counter: 0,
       round: 0
     })
