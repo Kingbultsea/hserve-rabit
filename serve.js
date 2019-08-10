@@ -32,12 +32,17 @@ app.use(async (ctx, next) => {
   // ctx.set('Content-Type', 'application/json;charset=utf-8')
   ctx.set('Access-Control-Max-Age', 300)
 
-  const array = ctx.request.headers.authorization.split('.')
-  const decode = JSON.parse(base64deCode(array[1]))
-  ctx.request.roomId = decode.roomId
+  try {
+    const array = ctx.request.headers.authorization.split('.')
+    const decode = JSON.parse(base64deCode(array[1]))
+    ctx.request.roomId = decode.roomId
+  } catch (e) {
+    ctx.request.roomId = '12345'
+  }
+
 
   // 测试
-  // ctx.request.roomId = '12345'
+  //
 
   if (ctx.request.method === 'OPTIONS') {
     ctx.response.status = 204
@@ -272,6 +277,7 @@ router.post('/user/front', (ctx, next) => {
 // 主播添加邀请人
 let anchorCreateData = new Map()
 router.post('/anchor/create', async (ctx, next) => {
+  console.log('创建游戏')
   const id = ctx.request.roomId
   const users = JSON.parse(ctx.request.body.users)
   let inviter = []
