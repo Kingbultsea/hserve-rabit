@@ -191,7 +191,7 @@ router.post('/user/ready', (ctx, next) => {
                 console.log(i.round, roundSaver)
                 if (i.round === roundSaver) {
                   // 别人如果是在线状态 那么只修改自己的随机状态
-                  if (i.online && selfName !== i.name && selfAvatar !== i.avatar) {
+                  if (!i.online && selfName !== i.name && selfAvatar !== i.avatar) {
                     return
                   }
                   i.round += 1 // 准备下一个回合的 +1
