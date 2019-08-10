@@ -163,18 +163,18 @@ router.post('/user/ready', (ctx, next) => {
             if (selfName === i.name && selfAvatar === i.avatar) {
               i.online = true
 
-              // 删除上一次的状态检查
-              if (i.onlineTimeout) {
-                console.log('delete')
-                clearTimeout(i.onlineTimeout)
-              }
-
-              console.log('avtive gameing')
-
-              // 30秒后 该用户没有再次激活
-              i.onlineTimeout = setTimeout(() => {
-                i.online = false
-              }, 30000)
+              // // 删除上一次的状态检查
+              // if (i.onlineTimeout) {
+              //   console.log('delete')
+              //   clearTimeout(i.onlineTimeout)
+              // }
+//
+              // console.log('avtive gameing')
+//
+              // // 30秒后 该用户没有再次激活
+              // i.onlineTimeout = setTimeout(() => {
+              //   i.online = false
+              // }, 30000)
 
               i.status = 5
               i.round += 1 // 现在设置只有自己的round才能加
