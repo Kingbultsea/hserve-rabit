@@ -161,6 +161,18 @@ router.post('/user/ready', (ctx, next) => {
 
             // 只有自己才可以准备
             if (selfName === i.name && selfAvatar === i.avatar) {
+              i.online = true
+
+              // 删除上一次的状态检查
+              if (i.onlineTimeout) {
+                clearTimeout(i.onlineTimeout)
+              }
+
+              // 30秒后 该用户没有再次激活
+              i.onlineTimeout = setTimeout(() => {
+                i.online = false
+              }, 30000)
+
               i.status = 5
               i.round += 1 // 现在设置只有自己的round才能加
             }
@@ -186,6 +198,9 @@ router.post('/user/ready', (ctx, next) => {
                 }
                 console.log(i.round, roundSaver)
                 if (i.round === roundSaver) {
+                  if (i.online) {
+                    return
+                  }
                   i.round += 1 // 准备下一个回合的 +1
                   console.log('随机状态触发')
                   let trueActions = []
@@ -196,7 +211,7 @@ router.post('/user/ready', (ctx, next) => {
                   i.front = trueActions[randomNum(0, 2)]
                   i.desc = '等待中'
                 }
-              }, 25000)
+              }, 34000)
 
             }
             setTimeout(func, 5000)
@@ -319,6 +334,8 @@ router.post('/anchor/create', async (ctx, next) => {
           score: 0,
           desc: '准备中',
           front: 500,
+          online: false, // 每一个回合的在线状态
+          onlineTimeout: '', // 记录在线的steTimeout
           counter: 0,
           round: 0
         }
