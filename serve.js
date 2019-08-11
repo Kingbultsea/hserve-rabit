@@ -352,7 +352,7 @@ router.post('/anchor/create', async (ctx, next) => {
 
   const score = []
   // 添加气泡
-  for (let i = 0; i < 5; i += 1) {
+  for (let i = 0; i < 6; i += 1) {
     const nowScore = []
     for (let i = 0; i < 5; i += 1) {
       let count = '' + randomNum(2, 5)
