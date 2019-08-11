@@ -176,6 +176,11 @@ router.post('/user/ready', (ctx, next) => {
             const func = () => {
               // 如果没有检测到用户进入了的话，那么这20000 无效 继续询问
               let typeCount = 0
+              if (!anchorCreateData.get(id)) {
+                console.log('log out')
+                // 没有则返回
+                return
+              }
               for (let i of anchorCreateData.get(id).inviter) {
                 i.status === 5 ? typeCount += 1 : ''
               }
