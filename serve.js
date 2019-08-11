@@ -38,7 +38,7 @@ app.use(async (ctx, next) => {
     ctx.request.roomId = decode.roomId
   } catch (e) {
   }
-  ctx.request.roomId = '12345'
+  // ctx.request.roomId = '12345'
 
 
   // 测试
