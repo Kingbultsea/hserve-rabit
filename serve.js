@@ -348,9 +348,9 @@ router.post('/anchor/create', async (ctx, next) => {
   const score = []
   // 添加气泡
   for (let i = 0; i < 4; i += 1) {
-    let count = '' + this.$wjh.randomNum(2, 5)
+    let count = '' + randomNum(2, 5)
     if (i === 2) {
-      count = '' + this.$wjh.randomNum(4, 6)
+      count = '' + randomNum(4, 6)
     }
     score.push(count)
   }
