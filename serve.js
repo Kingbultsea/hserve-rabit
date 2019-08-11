@@ -369,7 +369,7 @@ router.post('/anchor/create', async (ctx, next) => {
 router.post('/anchor/unload', async (ctx, next) => {
   const id = ctx.request.roomId
   anchorCreateData.delete(id)
-
+  console.log('delete game ' + id)
   ctx.body = { msg: 'success' }
 })
 
