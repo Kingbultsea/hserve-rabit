@@ -319,33 +319,46 @@ router.post('/anchor/create', async (ctx, next) => {
 
   // 主播10秒后，还有用户未准备的话，将随机抽取一位点击user/nowdata的用户
   const rad = () => {
-    for (let [index, i] of anchorCreateData.get(id).inviter.entries()) {
-      if (i.status !== 5) {
-        const userList = anchorCreateData.get(id).userList
-        const arr = [...userList]
-        if (arr.length === 0) {
-          setTimeout(rad, 10000)
-          return
-        }
-        const rdN = randomNum(0, arr.length - 1)
-        userList.delete(arr[rdN])
-        anchorCreateData.get(id).inviter[index] = {
-          name: arr[rdN].name,
-          avatar: arr[rdN].avatar,
-          status: 5, // 继续为0 需要玩家再次按下
-          score: 0,
-          desc: '准备中',
-          front: 500,
-          online: false, // 每一个回合的在线状态
-          onlineTimeout: null, // 记录在线的steTimeout
-          counter: 0,
-          round: 0
-        }
-        if (arr.length <= 1) {
-          setTimeout(rad, 10000)
-          return
+    try {
+      for (let [index, i] of anchorCreateData.get(id).inviter.entries()) {
+        if (i.status !== 5) {
+          const userList = anchorCreateData.get(id).userList
+          const arr = [...userList]
+          if (arr.length === 0) {
+            setTimeout(rad, 10000)
+            return
+          }
+          const rdN = randomNum(0, arr.length - 1)
+          userList.delete(arr[rdN])
+          anchorCreateData.get(id).inviter[index] = {
+            name: arr[rdN].name,
+            avatar: arr[rdN].avatar,
+            status: 5, // 继续为0 需要玩家再次按下
+            score: 0,
+            desc: '准备中',
+            front: 500,
+            online: false, // 每一个回合的在线状态
+            onlineTimeout: null, // 记录在线的steTimeout
+            counter: 0,
+            round: 0
+          }
+
+          let statusCount = 0
+          for (let i of anchorCreateData.get(id).inviter) {
+            i.status === 5 ? statusCount += 1 : ''
+          }
+          if (statusCount >= 4) {
+            return
+          }
+
+          if (arr.length <= 1) {
+            setTimeout(rad, 10000)
+            return
+          }
         }
       }
+    } catch (e) {
+
     }
   }
   setTimeout(rad, 10000)
