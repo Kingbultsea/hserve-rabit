@@ -143,6 +143,7 @@ router.post('/user/ready', (ctx, next) => {
 
   const id = ctx.request.roomId
   if (!anchorCreateData.get(id)) {
+    ctx.body = { msg: '该主播还没有创建游戏哦', status: 10001, hash: '' }
     // 没有则返回
     return
   }
@@ -178,6 +179,7 @@ router.post('/user/ready', (ctx, next) => {
               let typeCount = 0
               if (!anchorCreateData.get(id)) {
                 console.log('log out')
+                ctx.body = { msg: '游戏结束，主播停止游戏匹配', status: 10002, hash: '' }
                 // 没有则返回
                 return
               }
@@ -227,7 +229,7 @@ router.post('/user/ready', (ctx, next) => {
 
 
 
-  ctx.body = { msg: 'success', hash: '' }
+  ctx.body = { msg: 'success', status: 10000, hash: '' }
 })
 
 // 用户进入下一个回合
