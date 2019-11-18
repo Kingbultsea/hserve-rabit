@@ -1,0 +1,26 @@
+{
+  "defaultSeverity": "warning",
+  "extends": [
+    "tslint:recommended"
+  ],
+  "linterOptions": {
+    "exclude": [
+      "node_modules/**",
+      "src/unit/**"
+    ]
+  },
+  "rules": {
+    "no-require-imports": false,
+    "no-var-requires": false,
+    "class-name": false, // 取消canmel case
+    "no-string-literal": false,
+    "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
+    "semicolon":[true, "never", "ignore-interfaces"],
+    "indent": [true, "spaces", 2],
+    "interface-name": false,
+    "no-consecutive-blank-lines": false,
+    "object-literal-sort-keys": false,
+    "ordered-imports": false,
+    "quotemark": [true, "single"]
+  }
+}
