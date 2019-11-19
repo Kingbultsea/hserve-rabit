@@ -14,5 +14,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.heartide.com/Mx894275157/hserve"
+  }
 }
