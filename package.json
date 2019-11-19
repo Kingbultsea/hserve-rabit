@@ -1,7 +1,7 @@
 {
   "name": "hyserve",
   "version": "1.0.0",
-  "description": "",
+  "description": "hy serve",
   "main": "index.js",
   "dependencies": {
     "atob": "^2.1.2",
