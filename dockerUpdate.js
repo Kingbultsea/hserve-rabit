@@ -22,6 +22,7 @@ router.post('/wechat', async ctx => {
   console.log('from docker webhook', data.repository.namespace, data.repository.name, IMAGES_NAME)
   if (data.repository.namespace === 'hodor123' && data.repository.name === IMAGES_NAME) {
     process.exec(instruct.join('&'), err => {
+      console.log('run')
       err
         ? console.log(err)
         : console.log('process done work', err)

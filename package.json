@@ -6,6 +6,7 @@
   "dependencies": {
     "@types/koa": "^2.0.52",
     "atob": "^2.1.2",
+    "child_process": "^1.0.2",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0"
