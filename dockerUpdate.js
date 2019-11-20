@@ -19,7 +19,7 @@ const instruct = [
 router.post('/wechat', async ctx => {
   let data = await parsePostData(ctx)
   data = JSON.parse(data)
-  console.log('from docker webhook')
+  console.log('from docker webhook', data.repository.namespace, data.repository.name, IMAGES_NAME)
   if (data.repository.namespace === 'hodor123' && data.repository.name === IMAGES_NAME) {
     process.exec(instruct.join('&'), err => {
       err
