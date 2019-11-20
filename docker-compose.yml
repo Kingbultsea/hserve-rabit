@@ -1,0 +1,7 @@
+version: "3.7"
+services:
+  info:
+    container_name: hserve
+    image: hodor123/hserve:latest
+    ports:
+      - "8082:81"
