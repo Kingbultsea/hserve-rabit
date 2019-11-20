@@ -13,5 +13,5 @@ install:
 
 script:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  # - docker build -t hodor123/hello-docker2:latest .
-  # - docker push hodor123/hello-docker2:latest
+  - docker build -t hodor123/hserve:latest .
+  - docker push hodor123/hserve:latest

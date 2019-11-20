@@ -5,8 +5,7 @@
   ],
   "linterOptions": {
     "exclude": [
-      "node_modules/**",
-      "src/unit/**"
+      "node_modules/**"
     ]
   },
   "rules": {
