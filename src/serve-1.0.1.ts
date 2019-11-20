@@ -9,5 +9,5 @@ const router = new Router()
 routerConfig(app, router)
 
 router.get('/user/nowdata', (ctx) => {
-    ctx.body = '123456 hahahah'
+    ctx.body = '123456 hahahah 2333'
 })
