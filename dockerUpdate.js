@@ -70,4 +70,11 @@ function parsePostData (ctx) {
 // process.exec('docker-compose pull info', () => {
 // })
 
+process.exec('node -v', err => {
+  console.log('run')
+  err
+    ? console.log(err)
+    : console.log('process done work', err)
+})
+
 app.listen('2333')
