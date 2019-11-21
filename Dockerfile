@@ -9,6 +9,10 @@ COPY package*.json ./
 
 COPY dist/index.js ./
 
+# 配置系统变量，指定端口
+ENV HOST 0.0.0.0
+ENV PORT 8096
+
 EXPOSE 81
 
 CMD [ "npm", "run", "start" ]
