@@ -7,7 +7,7 @@ COPY package*.json ./
 # If you are building your code for production
 # RUN npm ci --only=production
 
-COPY dist/index.js ./
+COPY dist/index.js ./usr/src/app
 
 EXPOSE 81
 
