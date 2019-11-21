@@ -9,6 +9,7 @@ app.use(router.routes())
 const IMAGES_NAME = 'hserve'
 
 const instruct = [
+  'cd ~/hserve-rabit',
   'docker-compose pull',
   'docker-compose stop',
   'docker-compose rm',
@@ -23,10 +24,10 @@ router.post('/wechat', async ctx => {
   if (data.repository.namespace === 'hodor123' && data.repository.name === IMAGES_NAME) {
     console.log('run ~')
     process.exec(instruct.join('&'), err => {
-      console.log('run')
+      console.log('run', instruct.join('&'))
       err
         ? console.log(err)
-        : console.log('process done work', err)
+        : console.log('process done work')
     })
     ctx.response.status = 200
     ctx.response.body = JSON.stringify({
@@ -69,12 +70,5 @@ function parsePostData (ctx) {
 
 // process.exec('docker-compose pull info', () => {
 // })
-
-process.exec('node -v', err => {
-  console.log('run')
-  err
-    ? console.log(err)
-    : console.log('process done work', err)
-})
 
 app.listen('2333')
