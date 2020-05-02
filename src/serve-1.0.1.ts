@@ -11,3 +11,9 @@ routerConfig(app, router)
 router.get('/user/nowdata', (ctx) => {
     ctx.body = '123456 hahahah 2333'
 })
+
+// 进入游戏输入名称
+router.post('/user/input', (ctx) => {
+})
+
+//

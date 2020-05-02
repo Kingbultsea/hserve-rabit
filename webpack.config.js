@@ -4,7 +4,7 @@ module.exports = {
   entry: './src/serve-1.0.1.ts',
   target: 'node',
   output: {
-    globalObject: 'this', // 添加这个选项
+    globalObject: 'this',
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist')
   },
