@@ -9,13 +9,16 @@
     "child_process": "^1.0.2",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
-    "koa-router": "^7.4.0"
+    "koa-router": "^7.4.0",
+    "node-rsa": "^1.0.8",
+    "ws": "^7.2.5"
   },
   "devDependencies": {
     "fs": "0.0.1-security",
     "net": "^1.0.2",
     "script": "^0.1.4",
     "ts-loader": "^6.2.1",
+    "ts-node-dev": "^1.0.0-pre.44",
     "tslint": "^5.20.1",
     "typescript": "^3.7.2",
     "webpack": "^4.41.2",
