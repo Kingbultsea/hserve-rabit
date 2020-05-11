@@ -11,7 +11,7 @@ COPY dist/index.js ./
 
 # 配置系统变量，指定端口
 ENV HOST 0.0.0.0
-ENV PORT 8096
+ENV PORT 3009
 
 EXPOSE 81
 

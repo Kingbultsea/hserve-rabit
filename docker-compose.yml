@@ -4,4 +4,4 @@ services:
     container_name: hserve
     image: hodor123/hserve:latest
     ports:
-      - "8091:8096"
+      - "3009:3009"
