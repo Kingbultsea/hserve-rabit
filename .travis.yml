@@ -4,6 +4,8 @@ node_js:
 services:
   - docker
 
+install: skip
+
 cache:
   directories:
     - node_modules
