@@ -1,6 +1,6 @@
 const _WebSocketServer = require('ws').Server
 const fs = require('fs')
-const WebSocketServer = new _WebSocketServer({ port: 8096 })
+const WebSocketServer = new _WebSocketServer({ port: 3009 })
 const rml: unique symbol = Symbol('roomLength')
 
 interface MemoryType {
