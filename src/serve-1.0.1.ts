@@ -95,7 +95,7 @@ WebSocketServer.on('connection', async (ws) => {
             }
 
             if (data.data.name) {
-                NAME = name
+                NAME = data.data.name
             }
 
             if (data.data.avatar) {
