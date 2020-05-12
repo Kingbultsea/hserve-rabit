@@ -44,6 +44,14 @@ WebSocketServer.on('connection', async (ws) => {
         if (data.data.status === 10000) { // 创建房间
             role = 1
 
+            if (data.data.name) {
+                NAME = data.data.name
+            }
+
+            if (data.data.avatar) {
+                AVATAR = data.data.avatar
+            }
+
             memory[rml]++
             roomKey = memory[rml]
             memory[roomKey] = {
@@ -84,6 +92,14 @@ WebSocketServer.on('connection', async (ws) => {
                 ws.send(messageFormatter(9, {
                 }))
                 return
+            }
+
+            if (data.data.name) {
+                NAME = name
+            }
+
+            if (data.data.avatar) {
+                AVATAR = data.data.avatar
             }
 
             // @ts-ignore
