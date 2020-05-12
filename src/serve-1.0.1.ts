@@ -18,7 +18,7 @@ WebSocketServer.on('connection', async (ws) => {
     let lock: boolean = false // 上锁
     let role: 1 | 2 | 3 | 4 | undefined = undefined
     let AVATAR = 'https://res.psy-1.com/FskrtbwZ59DkAgSDSJPRUEuQXiqy'
-    let NAME = 'FFF'
+    let NAME = '隐姓埋名的玩家'
 
     function upRole(r: role) {
         role = r
