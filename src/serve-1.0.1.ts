@@ -47,11 +47,9 @@ WebSocketServer.on('connection', async (ws) => {
             if (data.data.name) {
                 NAME = data.data.name
             }
-
             if (data.data.avatar) {
                 AVATAR = data.data.avatar
             }
-
             memory[rml]++
             roomKey = memory[rml]
             memory[roomKey] = {
